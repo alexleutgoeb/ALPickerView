@@ -1,0 +1,26 @@
+ALPickerView
+------------
+
+ALPickerView is an attempt to mime the multiple selection behavior of Cocoa Touch's UIPickerView (as seen in Mobile Safari).
+
+This is a sort of a quick hack which requires three custom classes, improvements are highly appreciated!
+
+[![ALPickerView Screenshot](http://files.droplr.com/files/152198278/CKkh.screen-small.png "ALPickerView Screenshot")](http://files.droplr.com/files/152198278/aQtT.screen.png)
+
+Requires iOS SDK 4.0 or higher
+
+
+How to use
+----------
+
+* Copy class files from Classes folder to your project
+* Copy image files from ImageRes folder to your project
+* Import `ALPickerView.h` and implement ALPickerViewDelegate protocol
+* See Demo project for details
+
+
+Known problems
+--------------
+
+* `UITapGestureRecognizer` cancels tap gestures after 5 secs
+* Text gets no pressed color on short taps
