@@ -12,7 +12,9 @@
 
 @interface DemoViewController : UIViewController <ALPickerViewDelegate> {
 	NSArray *entries;
-	NSMutableDictionary *selectionStates;	
+	NSMutableDictionary *selectionStates;
+	
+	ALPickerView *pickerView;
 }
 
 @end

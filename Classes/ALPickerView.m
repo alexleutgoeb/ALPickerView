@@ -32,7 +32,7 @@
 
 @implementation ALPickerView
 
-@synthesize delegate;
+@synthesize delegate, allOption, allOptionTitle;
 
 
 #pragma mark -
@@ -46,21 +46,31 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithFrame:(CGRect)frame {
 	// Set fix width and height
-	if (self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, 320.f, 215.f)]) {
+	if ((self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, 320.f, 215.f)])) {
 		self.delegate = nil;
 		internalPickerView = [[UIPickerView alloc] init];
 		internalPickerView.delegate = self;
 		internalPickerView.dataSource = self;
 		internalPickerView.showsSelectionIndicator = NO;
 		[self addSubview:internalPickerView];
+		
+		allOption = false;
+		allSelected = false;
 	}
 	return self;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
+	[allOptionTitle release];
+	
 	[internalPickerView release];
 	[super dealloc];
+}
+
+- (void)setNeedsLayout {
+	[super setNeedsLayout];
+	[internalPickerView setNeedsLayout];
 }
 
 
@@ -79,7 +89,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return [self.delegate numberOfRowsForPickerView:self];
+	return [self.delegate numberOfRowsForPickerView:self] + (allOption ? 1 : 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,21 +106,29 @@
 		   reusingView:(UIView *)view {
 	
 	CheckView *checkView = (CheckView *)view;
-	[checkView removeObserver:self forKeyPath:@"selected"];
-	
 	
 	if (checkView == nil) {
 		checkView = [[[CheckView alloc] init] autorelease];
 	}
+	else {
+		checkView.delegate = nil;
+	}
 	
-	checkView.title = [delegate pickerView:self textForRow:row];
-	checkView.selected = [delegate pickerView:self selectionStateForRow:row];
-	checkView.tag = row;
+	if (allOption && row == 0) {
+		checkView.title = (allOptionTitle != nil) ? allOptionTitle : @"All";
+		checkView.selected = allSelected;
+		checkView.tag = -1;
+	}
+	else {
+		int actualRow = row - (allOption ? 1 : 0);
+		
+		checkView.title = [delegate pickerView:self textForRow:actualRow];
+		checkView.selected = [delegate pickerView:self selectionStateForRow:actualRow];
+		checkView.tag = actualRow;
+	}
 	
-	// TODO: Required ?
 	[checkView setNeedsDisplay];
-	
-	[checkView addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
+	checkView.delegate = self;
 	
 	return checkView;
 }
@@ -121,7 +139,6 @@
 	
 	if ([keyPath isEqualToString:@"selected"]) {
 		CheckView *checkView = (CheckView *)object;
-		
 		BOOL selected = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
 		
 		if (!selected) {
@@ -133,6 +150,25 @@
 			if ([self.delegate respondsToSelector:@selector(pickerView:didCheckRow:)]) {
 				[self.delegate pickerView:self didCheckRow:checkView.tag];
 			}
+		}
+		
+		if (checkView.tag == -1) {
+			// Select all rows
+			allSelected = selected;
+			[self setNeedsLayout];
+		}
+		else if (allSelected == YES) {
+			allSelected = NO;
+			[self setNeedsLayout];
+		}
+		else if(allSelected == NO) {
+			// Check if all rows are checked
+			for (int i = 0; i < [self.delegate numberOfRowsForPickerView:self]; i++) {
+				if ([delegate pickerView:self selectionStateForRow:i] == NO)
+					return;
+			}
+			allSelected = YES;
+			[self setNeedsLayout];
 		}
 	}
 }

@@ -32,6 +32,8 @@
 
 
 @interface CheckView : UIView {
+	id delegate;
+	
 	NSString *title;
 	UIImage *checkImage;
 	
@@ -42,6 +44,8 @@
 	UIColor *labelColor;
 }
 
+// The delegate used for kvo
+@property (nonatomic, assign) id delegate;
 // The title of the row view
 @property (nonatomic, retain) NSString *title;
 // The selection state of the row view

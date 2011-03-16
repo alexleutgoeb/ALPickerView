@@ -35,10 +35,17 @@
 @private
 	UIPickerView *internalPickerView;
 	id<ALPickerViewDelegate> delegate;
+	BOOL allOption;
+	NSString *allOptionTitle;
+	BOOL allSelected;
 }
 
 // Set a delegate conforming to ALPickerViewDelegate protocol
-@property(nonatomic, assign) id<ALPickerViewDelegate> delegate;
+@property (nonatomic, assign) id<ALPickerViewDelegate> delegate;
+// Set wether an all option should be displayed or not
+@property (nonatomic, assign) BOOL allOption;
+// Set the all option title to display in first row, default is 'All'
+@property (nonatomic, retain) NSString *allOptionTitle;
 
 @end
 
@@ -57,9 +64,9 @@
 
 @optional
 
-// Inform the delegate that a row got selected
+// Inform the delegate that a row got selected, if row = -1 all rows are selected
 - (void)pickerView:(ALPickerView *)pickerView didCheckRow:(NSInteger)row;
-// Inform the delegate that a row got deselected
+// Inform the delegate that a row got deselected, if row = -1 all rows are deselected
 - (void)pickerView:(ALPickerView *)pickerView didUncheckRow:(NSInteger)row;
 
 @end

@@ -22,13 +22,15 @@
 		[selectionStates setObject:[NSNumber numberWithBool:NO] forKey:key];
 	
 	// Init picker and add it to view
-	ALPickerView *pickerView = [[ALPickerView alloc] initWithFrame:CGRectMake(0.f, 244.f, 0.f, 0.f)];
+	pickerView = [[ALPickerView alloc] initWithFrame:CGRectMake(0.f, 244.f, 0.f, 0.f)];
+	pickerView.allOption = YES;
 	pickerView.delegate = self;
-	[self.view addSubview:pickerView];
-	[pickerView release];
+	[self.view addSubview:pickerView];	
 }
 
 - (void)dealloc {
+	[pickerView release];
+	
 	[selectionStates release];
 	[entries release];
     [super dealloc];
@@ -51,11 +53,21 @@
 }
 
 - (void)pickerView:(ALPickerView *)pickerView didCheckRow:(NSInteger)row {
-	[selectionStates setObject:[NSNumber numberWithBool:YES] forKey:[entries objectAtIndex:row]];
+	// Check whether all rows are checked or only one
+	if (row == -1)
+		for (id key in [selectionStates allKeys])
+			[selectionStates setObject:[NSNumber numberWithBool:YES] forKey:key];
+	else
+		[selectionStates setObject:[NSNumber numberWithBool:YES] forKey:[entries objectAtIndex:row]];
 }
 
 - (void)pickerView:(ALPickerView *)pickerView didUncheckRow:(NSInteger)row {
-	[selectionStates setObject:[NSNumber numberWithBool:NO] forKey:[entries objectAtIndex:row]];
+	// Check whether all rows are unchecked or only one
+	if (row == -1)
+		for (id key in [selectionStates allKeys])
+			[selectionStates setObject:[NSNumber numberWithBool:NO] forKey:key];
+	else
+		[selectionStates setObject:[NSNumber numberWithBool:NO] forKey:[entries objectAtIndex:row]];
 }
 
 @end

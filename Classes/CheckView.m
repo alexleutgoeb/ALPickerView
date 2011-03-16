@@ -43,7 +43,8 @@
 
 @implementation CheckView
 
-@synthesize title, selected, checkImage, labelColor;
+@synthesize title, checkImage, labelColor;
+@dynamic selected, delegate;
 
 const CGFloat kViewWidth = 298.f;
 const CGFloat kViewHeight = 44.f;
@@ -54,7 +55,7 @@ const CGFloat kViewHeight = 44.f;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-	if (self = [super initWithFrame:CGRectMake(0.0, 0.0, kViewWidth, kViewHeight)])	{
+	if ((self = [super initWithFrame:CGRectMake(0.0, 0.0, kViewWidth, kViewHeight)]))	{
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		self.backgroundColor = [UIColor clearColor];
 		self.userInteractionEnabled = NO;
@@ -70,7 +71,10 @@ const CGFloat kViewHeight = 44.f;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
 	[gestureRec removeObserver:self forKeyPath:@"state"];
-	[gestureRec release];	
+	[gestureRec release];
+	
+	self.delegate = nil;
+	
 	[title release];
 	[checkImage release];
 	
@@ -140,6 +144,27 @@ const CGFloat kViewHeight = 44.f;
 	else {
 		self.labelColor = [UIColor blackColor];
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (BOOL)selected {
+	return selected;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setDelegate:(id)aDelegate {
+	if (delegate != nil)
+		[self removeObserver:delegate forKeyPath:@"selected"];
+	
+	delegate = aDelegate;
+	
+	if (delegate != nil)
+		[self addObserver:delegate forKeyPath:@"selected" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (id)delegate {
+	return delegate;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
