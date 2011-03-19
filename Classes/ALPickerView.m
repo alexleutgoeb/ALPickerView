@@ -54,8 +54,8 @@
 		internalPickerView.showsSelectionIndicator = NO;
 		[self addSubview:internalPickerView];
 		
-		allOption = false;
-		allSelected = false;
+		allOption = NO;
+		allSelected = YES;
 	}
 	return self;
 }

@@ -100,9 +100,9 @@ const CGFloat kViewHeight = 44.f;
 - (void)drawRect:(CGRect)rect {
 	[super drawRect:rect];
 	
-	CGFloat fontSize = 25.5;
+	CGFloat fontSize = 21.f;
 	
-	CGFloat yCoord = (self.bounds.size.height - self.checkImage.size.height) / 2;
+	CGFloat yCoord = (self.bounds.size.height - self.checkImage.size.height) / 2 - 1;
 	
 	// draw the image and title using their draw methods
 	if (selected) {
@@ -110,7 +110,7 @@ const CGFloat kViewHeight = 44.f;
 	}
 	
 	
-	yCoord = (self.bounds.size.height - fontSize) / 2;
+	yCoord = (self.bounds.size.height - fontSize) / 2 - 2;
 	CGPoint point = CGPointMake(14.0 + self.checkImage.size.width + 6.0, yCoord);
 	
 	[self.labelColor set];
