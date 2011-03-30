@@ -37,7 +37,6 @@
 	id<ALPickerViewDelegate> delegate;
 	BOOL allOption;
 	NSString *allOptionTitle;
-	BOOL allSelected;
 }
 
 // Set a delegate conforming to ALPickerViewDelegate protocol

@@ -55,7 +55,6 @@
 		[self addSubview:internalPickerView];
 		
 		allOption = NO;
-		allSelected = YES;
 	}
 	return self;
 }
@@ -66,11 +65,6 @@
 	
 	[internalPickerView release];
 	[super dealloc];
-}
-
-- (void)setNeedsLayout {
-	[super setNeedsLayout];
-	[internalPickerView setNeedsLayout];
 }
 
 
@@ -116,6 +110,13 @@
 	
 	if (allOption && row == 0) {
 		checkView.title = (allOptionTitle != nil) ? allOptionTitle : @"All";
+		BOOL allSelected = YES;
+		for (int i = 0; i < [self.delegate numberOfRowsForPickerView:self]; i++) {
+			if ([delegate pickerView:self selectionStateForRow:i] == NO) {
+				allSelected = NO;
+				break;
+			}
+		}
 		checkView.selected = allSelected;
 		checkView.tag = -1;
 	}
@@ -152,24 +153,9 @@
 			}
 		}
 		
-		if (checkView.tag == -1) {
-			// Select all rows
-			allSelected = selected;
-			[self setNeedsLayout];
-		}
-		else if (allSelected == YES) {
-			allSelected = NO;
-			[self setNeedsLayout];
-		}
-		else if(allSelected == NO) {
-			// Check if all rows are checked
-			for (int i = 0; i < [self.delegate numberOfRowsForPickerView:self]; i++) {
-				if ([delegate pickerView:self selectionStateForRow:i] == NO)
-					return;
-			}
-			allSelected = YES;
-			[self setNeedsLayout];
-		}
+		[internalPickerView reloadAllComponents];
+		int actualRow = checkView.tag + (allOption ? 1 : 0);
+		[internalPickerView selectRow:actualRow inComponent:0 animated:YES];
 	}
 }
 
