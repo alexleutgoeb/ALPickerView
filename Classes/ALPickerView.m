@@ -40,15 +40,15 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-	return [self initWithFrame:CGRectMake(0.f, 0.f, 320.f, 215.f)];
+	return [self initWithFrame:CGRectMake(0.f, 0.f, 320.f, 216.f)];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithFrame:(CGRect)frame {
 	// Set fix width and height
-	if ((self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, 320.f, 215.f)])) {
+	if ((self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, 320.f, 216.f)])) {
 		self.delegate = nil;
-		internalPickerView = [[UIPickerView alloc] init];
+		internalPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320.f, 216.f)];
 		internalPickerView.delegate = self;
 		internalPickerView.dataSource = self;
 		internalPickerView.showsSelectionIndicator = NO;
