@@ -18,9 +18,10 @@ How to use
 * Import `ALPickerView.h` and implement ALPickerViewDelegate protocol
 * See Demo project for details
 
+(*Hint:* On iPad, present `ALPickerView` only within a `UIPopoverController` and make sure that it is the only subview of your viewcontroller's root view or either override loadView and set ALPickerView as the root view itself.)
 
 Known problems
 --------------
 
 * `UITapGestureRecognizer` cancels tap gestures after 5 secs
-* Text gets no pressed color on short taps
+* Text isn't colored on short taps
