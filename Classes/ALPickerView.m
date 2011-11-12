@@ -58,7 +58,8 @@
     internalTableView_.separatorStyle = UITableViewCellSeparatorStyleNone;
     internalTableView_.showsVerticalScrollIndicator = NO;
     internalTableView_.scrollsToTop = NO;
-    UIImage *backgroundImage = [[UIImage imageNamed:@"wheel_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
+    UIImage *backgroundImage = [[UIImage imageNamed:@"wheel_bg"] stretchableImageWithLeftCapWidth:4 topCapHeight:0];
+    
     internalTableView_.backgroundView = [[[UIImageView alloc] initWithImage:backgroundImage] autorelease];
     [self addSubview:internalTableView_];
     
@@ -74,8 +75,9 @@
     UIImageView *rightBorder = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frame_right"]] autorelease];
     rightBorder.frame = CGRectMake(self.frame.size.width - 15, 0, 15, 216);
     [self addSubview:rightBorder];
-    UIImageView *middleBorder = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"frame_middle"] 
-                                                                     resizableImageWithCapInsets:UIEdgeInsetsMake(10, 0, 10, 0)]] autorelease];
+    UIImageView *middleBorder = [[[UIImageView alloc] initWithImage:
+                                  [[UIImage imageNamed:@"frame_middle"] 
+                                   stretchableImageWithLeftCapWidth:0 topCapHeight:10]] autorelease];
     middleBorder.frame = CGRectMake(15, 0, self.frame.size.width - 30, 216);
     [self addSubview:middleBorder];
   }
@@ -194,15 +196,18 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)scrollViewDidEndDecelerating:(UITableView *)tableView {
-  int tomove = ((int)tableView.contentOffset.y%(int)tableView.rowHeight);
-  if(tomove < tableView.rowHeight/2) [tableView setContentOffset:CGPointMake(0, tableView.contentOffset.y-tomove) animated:YES];
-  else [tableView setContentOffset:CGPointMake(0, tableView.contentOffset.y+(tableView.rowHeight-tomove)) animated:YES];
+  int co = ((int)tableView.contentOffset.y % (int)tableView.rowHeight);
+  if (co < tableView.rowHeight / 2)
+    [tableView setContentOffset:CGPointMake(0, tableView.contentOffset.y - co) animated:YES];
+  else
+    [tableView setContentOffset:CGPointMake(0, tableView.contentOffset.y + (tableView.rowHeight - co)) animated:YES];
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)scrollViewDidEndDragging:(UITableView *)scrollView willDecelerate:(BOOL)decelerate {
-  if(decelerate) return;
+  if(decelerate)
+    return;
   [self scrollViewDidEndDecelerating:scrollView];
 }
 
