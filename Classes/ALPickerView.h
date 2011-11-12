@@ -1,7 +1,7 @@
 //
 //  ALPickerView.h
 //
-//  Created by Alex Leutgöb on 16.01.11.
+//  Created by Alex Leutgöb on 11.11.11.
 //  Copyright 2011 alexleutgoeb.com. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,7 +23,7 @@
 // THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @protocol ALPickerViewDelegate;
 
@@ -31,20 +31,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-@interface ALPickerView : UIView <UIPickerViewDelegate, UIPickerViewDataSource> {
+@interface ALPickerView : UIView <UITableViewDataSource, UITableViewDelegate> {
 @private
-	UIPickerView *internalPickerView;
-	id<ALPickerViewDelegate> delegate;
-	BOOL allOption;
-	NSString *allOptionTitle;
+  id<ALPickerViewDelegate> delegate_;
+  
+  UITableView *internalTableView_;
 }
 
 // Set a delegate conforming to ALPickerViewDelegate protocol
 @property (nonatomic, assign) id<ALPickerViewDelegate> delegate;
-// Set wether an all option should be displayed or not
-@property (nonatomic, assign) BOOL allOption;
-// Set the all option title to display in first row, default is 'All'
-@property (nonatomic, retain) NSString *allOptionTitle;
+// Set the all option title to display an all option in first row, default is none
+@property (nonatomic, copy) NSString *allOptionTitle;
 
 @end
 

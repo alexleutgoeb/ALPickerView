@@ -1,7 +1,7 @@
 //
 //  ALPickerView.m
 //
-//  Created by Alex Leutgöb on 16.01.11.
+//  Created by Alex Leutgöb on 11.11.11.
 //  Copyright 2011 alexleutgoeb.com. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,7 +24,7 @@
 //
 
 #import "ALPickerView.h"
-#import "CheckView.h"
+#import "ALPickerViewCell.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,131 +32,178 @@
 
 @implementation ALPickerView
 
-@synthesize delegate, allOption, allOptionTitle;
+@synthesize delegate = delegate_;
+@synthesize allOptionTitle;
 
 
-#pragma mark -
-#pragma mark NSObject stuff
+#pragma mark - NSObject stuff
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-	return [self initWithFrame:CGRectMake(0.f, 0.f, 320.f, 216.f)];
+	return [self initWithFrame:CGRectMake(0, 0, 320, 216)];
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithFrame:(CGRect)frame {
 	// Set fix width and height
-	if ((self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, 320.f, 216.f)])) {
-		self.delegate = nil;
-		internalPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320.f, 216.f)];
-		internalPickerView.delegate = self;
-		internalPickerView.dataSource = self;
-		internalPickerView.showsSelectionIndicator = NO;
-		[self addSubview:internalPickerView];
-		
-		allOption = NO;
-	}
-	return self;
+	if ((self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, 320, 216)])) {
+    self.backgroundColor = [UIColor blackColor];
+    self.clipsToBounds = YES;
+    self.allOptionTitle = NSLocalizedString(@"All", @"All option title");
+    
+    internalTableView_ = [[UITableView alloc] initWithFrame:CGRectMake(10, -2, 300, 218) style:UITableViewStylePlain];
+    internalTableView_.delegate = self;
+    internalTableView_.dataSource = self;
+    internalTableView_.separatorStyle = UITableViewCellSeparatorStyleNone;
+    internalTableView_.showsVerticalScrollIndicator = NO;
+    internalTableView_.scrollsToTop = NO;
+    UIImage *backgroundImage = [[UIImage imageNamed:@"wheel_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
+    internalTableView_.backgroundView = [[[UIImageView alloc] initWithImage:backgroundImage] autorelease];
+    [self addSubview:internalTableView_];
+    
+    // Add shadow to wheel
+    UIImageView *shadow = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"wheel_shadow"]] autorelease];
+    shadow.frame = internalTableView_.frame;
+    [self addSubview:shadow];
+    
+    // Add border images
+    UIImageView *leftBorder = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frame_left"]] autorelease];
+    leftBorder.frame = CGRectMake(0, 0, 15, 216);
+    [self addSubview:leftBorder];
+    UIImageView *rightBorder = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frame_right"]] autorelease];
+    rightBorder.frame = CGRectMake(self.frame.size.width - 15, 0, 15, 216);
+    [self addSubview:rightBorder];
+    UIImageView *middleBorder = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"frame_middle"] 
+                                                                     resizableImageWithCapInsets:UIEdgeInsetsMake(10, 0, 10, 0)]] autorelease];
+    middleBorder.frame = CGRectMake(15, 0, self.frame.size.width - 30, 216);
+    [self addSubview:middleBorder];
+  }
+  return self;
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
 	[allOptionTitle release];
 	
-	[internalPickerView release];
+	[internalTableView_ release];
 	[super dealloc];
 }
 
 
-#pragma mark -
-#pragma mark UIPickerViewDataSource methods
+#pragma mark - UITableView
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-	return [CheckView viewWidth];
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-	return [CheckView viewHeight];
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return [self.delegate numberOfRowsForPickerView:self] + (allOption ? 1 : 0);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-	return 1;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  // Add 4 additional rows for whitespace on top and bottom
+  if (allOptionTitle)
+    return [delegate_ numberOfRowsForPickerView:self] ? [delegate_ numberOfRowsForPickerView:self] + 5 : 0;
+  else
+    return [delegate_ numberOfRowsForPickerView:self] ? [delegate_ numberOfRowsForPickerView:self] + 4 : 0;
 }
 
 
-#pragma mark -
-#pragma mark UIPickerViewDelegate methods
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component 
-		   reusingView:(UIView *)view {
-	
-	CheckView *checkView = (CheckView *)view;
-	
-	if (checkView == nil) {
-		checkView = [[[CheckView alloc] init] autorelease];
-	}
-	else {
-		checkView.delegate = nil;
-	}
-	
-	if (allOption && row == 0) {
-		checkView.title = (allOptionTitle != nil) ? allOptionTitle : @"All";
-		BOOL allSelected = YES;
-		for (int i = 0; i < [self.delegate numberOfRowsForPickerView:self]; i++) {
-			if ([delegate pickerView:self selectionStateForRow:i] == NO) {
-				allSelected = NO;
-				break;
-			}
-		}
-		checkView.selected = allSelected;
-		checkView.tag = -1;
-	}
-	else {
-		int actualRow = row - (allOption ? 1 : 0);
-		
-		checkView.title = [delegate pickerView:self textForRow:actualRow];
-		checkView.selected = [delegate pickerView:self selectionStateForRow:actualRow];
-		checkView.tag = actualRow;
-	}
-	
-	[checkView setNeedsDisplay];
-	checkView.delegate = self;
-	
-	return checkView;
+- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  static NSString *CellIdentifier = @"ALPVCell";
+  
+  ALPickerViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+  if (cell == nil) {
+    cell = [[[ALPickerViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
+  }
+  
+  if (indexPath.row < 2 || indexPath.row >= ([delegate_ numberOfRowsForPickerView:self] + (allOptionTitle ? 3 : 2))) {
+    // Whitespace cell
+    cell.textLabel.text = nil;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  }
+  else {
+    if (allOptionTitle && indexPath.row == 2) {
+      cell.textLabel.text = allOptionTitle;
+      BOOL allSelected = YES;
+      for (int i = 0; i < [self.delegate numberOfRowsForPickerView:self]; i++) {
+        if ([delegate_ pickerView:self selectionStateForRow:i] == NO) {
+          allSelected = NO;
+          break;
+        }
+      }
+      cell.selectionState = allSelected;
+    }
+    else {
+      int actualRow = indexPath.row - (allOptionTitle ? 3 : 2);
+      cell.textLabel.text = [delegate_ pickerView:self textForRow:actualRow];
+      cell.selectionState = [delegate_ pickerView:self selectionStateForRow:actualRow];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+  }
+  
+  return cell;
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change 
-					   context:(void *)context {
-	
-	if ([keyPath isEqualToString:@"selected"]) {
-		CheckView *checkView = (CheckView *)object;
-		BOOL selected = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
-		
-		if (!selected) {
-			if ([self.delegate respondsToSelector:@selector(pickerView:didUncheckRow:)]) {
-				[self.delegate pickerView:self didUncheckRow:checkView.tag];
-			}
-		}
-		else {
-			if ([self.delegate respondsToSelector:@selector(pickerView:didCheckRow:)]) {
-				[self.delegate pickerView:self didCheckRow:checkView.tag];
-			}
-		}
-		
-		[internalPickerView reloadAllComponents];
-		int actualRow = checkView.tag + (allOption ? 1 : 0);
-		[internalPickerView selectRow:actualRow inComponent:0 animated:YES];
-	}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {  
+  if (indexPath.row > 1 && indexPath.row < ([delegate_ numberOfRowsForPickerView:self] + (allOptionTitle ? 3 : 2))) {
+    // Set selection state
+    ALPickerViewCell *cell = (ALPickerViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    cell.selectionState = !cell.selectionState;
+    
+    // Inform delegate
+    int actualRow = indexPath.row - (allOptionTitle ? 3 : 2);
+    
+    if (cell.selectionState != NO) {
+      if ([self.delegate respondsToSelector:@selector(pickerView:didCheckRow:)])
+        [delegate_ pickerView:self didCheckRow:actualRow];
+    }
+    else {
+      if ([self.delegate respondsToSelector:@selector(pickerView:didUncheckRow:)])
+        [delegate_ pickerView:self didUncheckRow:actualRow];
+    }
+    
+    // Iterate visible cells and update them too
+    for (ALPickerViewCell *aCell in tableView.visibleCells) {
+      int iterateRow = [tableView indexPathForCell:aCell].row - (allOptionTitle ? 3 : 2);
+      
+      if (allOptionTitle && iterateRow == -1) {
+        BOOL allSelected = YES;
+        for (int i = 0; i < [self.delegate numberOfRowsForPickerView:self]; i++) {
+          if ([delegate_ pickerView:self selectionStateForRow:i] == NO) {
+            allSelected = NO;
+            break;
+          }
+        }
+        aCell.selectionState = allSelected;
+      }
+      else if (iterateRow >= 0 && iterateRow < [delegate_ numberOfRowsForPickerView:self]) {
+        if (iterateRow == actualRow)
+          continue;
+        aCell.selectionState = [delegate_ pickerView:self selectionStateForRow:iterateRow];
+      }
+    }
+    
+    // Scroll the cell cell to the middle of the tableview
+    [tableView setContentOffset:CGPointMake(0, tableView.rowHeight * (indexPath.row - 2)) animated:YES];    
+  }
+  
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+
+#pragma mark - ScrollView
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)scrollViewDidEndDecelerating:(UITableView *)tableView {
+  int tomove = ((int)tableView.contentOffset.y%(int)tableView.rowHeight);
+  if(tomove < tableView.rowHeight/2) [tableView setContentOffset:CGPointMake(0, tableView.contentOffset.y-tomove) animated:YES];
+  else [tableView setContentOffset:CGPointMake(0, tableView.contentOffset.y+(tableView.rowHeight-tomove)) animated:YES];
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)scrollViewDidEndDragging:(UITableView *)scrollView willDecelerate:(BOOL)decelerate {
+  if(decelerate) return;
+  [self scrollViewDidEndDecelerating:scrollView];
 }
 
 @end

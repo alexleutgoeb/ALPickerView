@@ -16,12 +16,14 @@
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* DemoViewController.m */; };
 		FA36CA2112E4DABB00A49F9F /* ALPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA36CA1C12E4DABB00A49F9F /* ALPickerView.m */; };
-		FA36CA2212E4DABB00A49F9F /* CheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA36CA1E12E4DABB00A49F9F /* CheckView.m */; };
-		FA36CA2312E4DABB00A49F9F /* CustomTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = FA36CA2012E4DABB00A49F9F /* CustomTapGestureRecognizer.m */; };
-		FA36CA2812E4DB2700A49F9F /* check_white.png in Resources */ = {isa = PBXBuildFile; fileRef = FA36CA2412E4DB2700A49F9F /* check_white.png */; };
-		FA36CA2912E4DB2700A49F9F /* check_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA36CA2512E4DB2700A49F9F /* check_white@2x.png */; };
-		FA36CA2A12E4DB2700A49F9F /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = FA36CA2612E4DB2700A49F9F /* check.png */; };
-		FA36CA2B12E4DB2700A49F9F /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA36CA2712E4DB2700A49F9F /* check@2x.png */; };
+		FA8EA5EA146EC91100CCACA3 /* ALPickerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8EA5E9146EC91100CCACA3 /* ALPickerViewCell.m */; };
+		FA8EA60A146EDEF300CCACA3 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5EB146EC92A00CCACA3 /* check@2x.png */; };
+		FA8EA60B146EDEF300CCACA3 /* check_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5EC146EC92A00CCACA3 /* check_selected@2x.png */; };
+		FA8EA60C146EDEF300CCACA3 /* frame_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5ED146EC92A00CCACA3 /* frame_left@2x.png */; };
+		FA8EA60D146EDEF300CCACA3 /* frame_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5EE146EC92A00CCACA3 /* frame_middle@2x.png */; };
+		FA8EA60E146EDEF300CCACA3 /* frame_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5EF146EC92A00CCACA3 /* frame_right@2x.png */; };
+		FA8EA60F146EDEF300CCACA3 /* wheel_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5F0146EC92A00CCACA3 /* wheel_shadow@2x.png */; };
+		FA8EA610146EDEF300CCACA3 /* wheel_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5F1146EC92A00CCACA3 /* wheel_bg@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,14 +42,15 @@
 		8D1107310486CEB800E47090 /* Demo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Demo-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		FA36CA1B12E4DABB00A49F9F /* ALPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALPickerView.h; path = ../Classes/ALPickerView.h; sourceTree = SOURCE_ROOT; };
 		FA36CA1C12E4DABB00A49F9F /* ALPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALPickerView.m; path = ../Classes/ALPickerView.m; sourceTree = SOURCE_ROOT; };
-		FA36CA1D12E4DABB00A49F9F /* CheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckView.h; path = ../Classes/CheckView.h; sourceTree = SOURCE_ROOT; };
-		FA36CA1E12E4DABB00A49F9F /* CheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckView.m; path = ../Classes/CheckView.m; sourceTree = SOURCE_ROOT; };
-		FA36CA1F12E4DABB00A49F9F /* CustomTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomTapGestureRecognizer.h; path = ../Classes/CustomTapGestureRecognizer.h; sourceTree = SOURCE_ROOT; };
-		FA36CA2012E4DABB00A49F9F /* CustomTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomTapGestureRecognizer.m; path = ../Classes/CustomTapGestureRecognizer.m; sourceTree = SOURCE_ROOT; };
-		FA36CA2412E4DB2700A49F9F /* check_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check_white.png; path = ../ImageRes/check_white.png; sourceTree = SOURCE_ROOT; };
-		FA36CA2512E4DB2700A49F9F /* check_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check_white@2x.png"; path = "../ImageRes/check_white@2x.png"; sourceTree = SOURCE_ROOT; };
-		FA36CA2612E4DB2700A49F9F /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check.png; path = ../ImageRes/check.png; sourceTree = SOURCE_ROOT; };
-		FA36CA2712E4DB2700A49F9F /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check@2x.png"; path = "../ImageRes/check@2x.png"; sourceTree = SOURCE_ROOT; };
+		FA8EA5E8146EC91100CCACA3 /* ALPickerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALPickerViewCell.h; path = ../../Classes/ALPickerViewCell.h; sourceTree = "<group>"; };
+		FA8EA5E9146EC91100CCACA3 /* ALPickerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALPickerViewCell.m; path = ../../Classes/ALPickerViewCell.m; sourceTree = "<group>"; };
+		FA8EA5EB146EC92A00CCACA3 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check@2x.png"; path = "../ImageRes/check@2x.png"; sourceTree = "<group>"; };
+		FA8EA5EC146EC92A00CCACA3 /* check_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check_selected@2x.png"; path = "../ImageRes/check_selected@2x.png"; sourceTree = "<group>"; };
+		FA8EA5ED146EC92A00CCACA3 /* frame_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frame_left@2x.png"; path = "../ImageRes/frame_left@2x.png"; sourceTree = "<group>"; };
+		FA8EA5EE146EC92A00CCACA3 /* frame_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frame_middle@2x.png"; path = "../ImageRes/frame_middle@2x.png"; sourceTree = "<group>"; };
+		FA8EA5EF146EC92A00CCACA3 /* frame_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frame_right@2x.png"; path = "../ImageRes/frame_right@2x.png"; sourceTree = "<group>"; };
+		FA8EA5F0146EC92A00CCACA3 /* wheel_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wheel_shadow@2x.png"; path = "../ImageRes/wheel_shadow@2x.png"; sourceTree = "<group>"; };
+		FA8EA5F1146EC92A00CCACA3 /* wheel_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wheel_bg@2x.png"; path = "../ImageRes/wheel_bg@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,10 +111,13 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FA36CA2412E4DB2700A49F9F /* check_white.png */,
-				FA36CA2512E4DB2700A49F9F /* check_white@2x.png */,
-				FA36CA2612E4DB2700A49F9F /* check.png */,
-				FA36CA2712E4DB2700A49F9F /* check@2x.png */,
+				FA8EA5EB146EC92A00CCACA3 /* check@2x.png */,
+				FA8EA5EC146EC92A00CCACA3 /* check_selected@2x.png */,
+				FA8EA5ED146EC92A00CCACA3 /* frame_left@2x.png */,
+				FA8EA5EE146EC92A00CCACA3 /* frame_middle@2x.png */,
+				FA8EA5EF146EC92A00CCACA3 /* frame_right@2x.png */,
+				FA8EA5F0146EC92A00CCACA3 /* wheel_shadow@2x.png */,
+				FA8EA5F1146EC92A00CCACA3 /* wheel_bg@2x.png */,
 				2899E5210DE3E06400AC0155 /* DemoViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Demo-Info.plist */,
@@ -134,10 +140,8 @@
 			children = (
 				FA36CA1B12E4DABB00A49F9F /* ALPickerView.h */,
 				FA36CA1C12E4DABB00A49F9F /* ALPickerView.m */,
-				FA36CA1D12E4DABB00A49F9F /* CheckView.h */,
-				FA36CA1E12E4DABB00A49F9F /* CheckView.m */,
-				FA36CA1F12E4DABB00A49F9F /* CustomTapGestureRecognizer.h */,
-				FA36CA2012E4DABB00A49F9F /* CustomTapGestureRecognizer.m */,
+				FA8EA5E8146EC91100CCACA3 /* ALPickerViewCell.h */,
+				FA8EA5E9146EC91100CCACA3 /* ALPickerViewCell.m */,
 			);
 			name = ALPickerView;
 			sourceTree = "<group>";
@@ -196,10 +200,13 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* DemoViewController.xib in Resources */,
-				FA36CA2812E4DB2700A49F9F /* check_white.png in Resources */,
-				FA36CA2912E4DB2700A49F9F /* check_white@2x.png in Resources */,
-				FA36CA2A12E4DB2700A49F9F /* check.png in Resources */,
-				FA36CA2B12E4DB2700A49F9F /* check@2x.png in Resources */,
+				FA8EA60A146EDEF300CCACA3 /* check@2x.png in Resources */,
+				FA8EA60B146EDEF300CCACA3 /* check_selected@2x.png in Resources */,
+				FA8EA60C146EDEF300CCACA3 /* frame_left@2x.png in Resources */,
+				FA8EA60D146EDEF300CCACA3 /* frame_middle@2x.png in Resources */,
+				FA8EA60E146EDEF300CCACA3 /* frame_right@2x.png in Resources */,
+				FA8EA60F146EDEF300CCACA3 /* wheel_shadow@2x.png in Resources */,
+				FA8EA610146EDEF300CCACA3 /* wheel_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,8 +221,7 @@
 				1D3623260D0F684500981E51 /* DemoAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* DemoViewController.m in Sources */,
 				FA36CA2112E4DABB00A49F9F /* ALPickerView.m in Sources */,
-				FA36CA2212E4DABB00A49F9F /* CheckView.m in Sources */,
-				FA36CA2312E4DABB00A49F9F /* CustomTapGestureRecognizer.m in Sources */,
+				FA8EA5EA146EC91100CCACA3 /* ALPickerViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

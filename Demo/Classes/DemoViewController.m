@@ -22,8 +22,7 @@
 		[selectionStates setObject:[NSNumber numberWithBool:NO] forKey:key];
 	
 	// Init picker and add it to view
-	pickerView = [[ALPickerView alloc] initWithFrame:CGRectMake(0.f, 244.f, 0.f, 0.f)];
-	pickerView.allOption = YES;
+	pickerView = [[ALPickerView alloc] initWithFrame:CGRectMake(0, 244, 0, 0)];
 	pickerView.delegate = self;
 	[self.view addSubview:pickerView];	
 }
