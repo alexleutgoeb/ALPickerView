@@ -40,7 +40,7 @@
 
 // Set a delegate conforming to ALPickerViewDelegate protocol
 @property (nonatomic, assign) id<ALPickerViewDelegate> delegate;
-// Set the all option title to display an all option in first row, default is none
+// If set to nil the all option row is hidden at all, default is 'All'
 @property (nonatomic, copy) NSString *allOptionTitle;
 
 @end
