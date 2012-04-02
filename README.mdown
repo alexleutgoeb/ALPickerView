@@ -2,9 +2,9 @@
 
 `ALPickerView` is an attempt to mime the multiple selection behavior of Cocoa Touch's `UIPickerView` (as seen in Mobile Safari).
 
-[![ALPickerView Screenshot](http://files.droplr.com/files/152198278/CKkh.screen-small.png "ALPickerView Screenshot")](http://files.droplr.com/files/152198278/aQtT.screen.png)
+![ALPickerView Screenshot](https://github.com/alexleutgoeb/ALPickerView/raw/master/screenshot.png "ALPickerView Screenshot")
 
-~~Requires iOS SDK 4.0 or higher~~ *Update*: `ALPickerView` should now be compatible from iOS3 to iOS5
+~~Requires iOS SDK 4.0 or higher~~ *Update*: `ALPickerView` should now be compatible from iOS3 to latest
 
 ## How to use
 
