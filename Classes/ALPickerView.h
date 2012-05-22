@@ -43,6 +43,9 @@
 // If set to nil the all option row is hidden at all, default is 'All'
 @property (nonatomic, copy) NSString *allOptionTitle;
 
+// Reload whole pickerview from delegate
+- (void)reloadAllComponents;
+
 @end
 
 
